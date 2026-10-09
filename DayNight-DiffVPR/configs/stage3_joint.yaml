@@ -1,0 +1,40 @@
+# Stage3: joint paired training. Requires a GPU and real same-place day/night pairs.
+# For 4090 this is memory-conservative but slow: VPR on CPU for G gradients.
+model:
+  type: existing
+  pythonpath: /absolute/path/to/existing_vpr_repo
+  factory: your_adapter:build_model
+  factory_kwargs: {}
+  # checkpoint: outputs/stage1_train/vpr_last.pth
+  strict: true
+data:
+  image_root: /absolute/path/to/training_images
+  image_size: [322,322]   # your VPR, NOT diffusion, resolution
+  normalize: imagenet
+diffusion:
+  base_model: stable-diffusion-v1-5/stable-diffusion-v1-5
+  controlnet_id: lllyasviel/sd-controlnet-canny
+  resolution: 256     # start 256 on RTX 4090; then try 384
+  lora_rank: 4
+  gradient_checkpointing: true
+  prompt: 'realistic nighttime urban street photograph, streetlights, dark sky, natural night exposure, same buildings, same roads'
+joint:
+  pairs_csv: data/train_pairs.csv # day,night,negative,place_id,negative_place_id,split
+  batch_size: 1
+  num_workers: 2
+  max_steps: 100
+  save_every: 50
+  seed: 42
+  vpr_device: cpu  # save 4090 memory; switch to cuda if headroom permits
+  freeze_vpr_modules: []  # your own model's internal submodule names, e.g. [backbone]
+  lr_lora: 0.00001
+  lr_vpr: 0.00001
+  proxy_timestep: 400   # DDPM 1000-step noise scale
+  lambda_diff: 1.0
+  lambda_place: 0.5
+  lambda_struct: 0.05
+  lambda_illum: 0.1
+  margin: 0.2
+  grad_clip: 1.0
+  canny_low: 100
+  canny_high: 200

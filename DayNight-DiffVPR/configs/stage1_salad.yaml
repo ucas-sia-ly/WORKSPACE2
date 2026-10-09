@@ -1,0 +1,18 @@
+# Official pre-trained DINOv2-SALAD; needs network on first execution.
+model:
+  type: salad_hub
+
+data:
+  image_root: /absolute/path/to/tokyo247
+  database_csv: data/tokyo247_manifests/database.csv
+  queries_csv: data/tokyo247_manifests/queries.csv
+  positives_csv: data/tokyo247_manifests/positives.csv
+  image_size: [322, 322]
+  normalize: imagenet
+
+inference:
+  batch_size: 16  # 4090 (24GB) safe starting point; reduce to 4 on OOM
+  num_workers: 4
+  query_chunk: 16
+  database_chunk: 8192
+  recall_ks: [1, 5, 10]

@@ -1,0 +1,21 @@
+# Stage 2: offline day -> synthetic night. Training split ONLY; no Tokyo 24/7!
+train_data:
+  image_root: /absolute/path/to/training_images
+  day_csv: data/train_day.csv    # id,path,place_id,split (split must be train)
+generation:
+  base_model: stable-diffusion-v1-5/stable-diffusion-v1-5
+  controlnet_id: lllyasviel/sd-controlnet-canny
+  # lora_dir: outputs/stage3/diffusion_lora # optional: after Stage 3
+  resolution: 512
+  max_images: 1000  # use 3 for first GPU smoke test
+  seed: 42
+  strength: 0.65
+  guidance_scale: 6.0
+  control_scale: 0.8
+  steps: 25
+  canny_low: 100
+  canny_high: 200
+  min_edge_iou: 0.0  # filtering OFF by default; inspect visually before choosing threshold
+  cpu_offload: true
+  prompt: 'realistic photograph of the same urban street at night, streetlights, dark sky, natural photographic exposure, same buildings and same road'
+  negative_prompt: 'different buildings, surreal, warped buildings, warped road, daylight, cartoon, painterly'

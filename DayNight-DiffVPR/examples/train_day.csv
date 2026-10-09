@@ -1,0 +1,3 @@
+id,path,place_id,split
+stationA_day1,city/stationA/day1.jpg,stationA,train
+stationB_day1,city/stationB/day1.jpg,stationB,train

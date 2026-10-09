@@ -1,0 +1,7 @@
+name: daynight-diffvpr
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+# Install matching PyTorch CUDA wheels separately, then `pip install -e .[test]`.

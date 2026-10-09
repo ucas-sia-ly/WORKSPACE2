@@ -1,0 +1,26 @@
+# Point to your EXISTING VPR repo. No edits required to the old repo.
+model:
+  type: existing
+  pythonpath: /absolute/path/to/existing_vpr_repo
+  factory: your_adapter:build_model
+  factory_kwargs: {}
+  # checkpoint: /absolute/path/to/model.pth
+  # state_dict_key: model_state_dict
+  # strip_prefix: "module."
+  strict: true
+  # output_key: global_descriptor  # only if model.forward returns a dict
+
+data:
+  image_root: /absolute/path/to/tokyo247
+  database_csv: data/tokyo247_manifests/database.csv
+  queries_csv: data/tokyo247_manifests/queries.csv
+  positives_csv: data/tokyo247_manifests/positives.csv
+  image_size: [322, 322]
+  normalize: imagenet  # must match YOUR pretrained VPR input transform
+
+inference:
+  batch_size: 16
+  num_workers: 4
+  query_chunk: 16
+  database_chunk: 8192
+  recall_ks: [1, 5, 10]

@@ -1,0 +1,16 @@
+# Synthetic colors: verifies only IO + top-k + metrics; NOT scientific performance.
+model:
+  type: toy_color
+data:
+  image_root: data/demo
+  database_csv: data/demo/database.csv
+  queries_csv: data/demo/queries.csv
+  positives_csv: data/demo/positives.csv
+  image_size: [64, 64]
+  normalize: none
+inference:
+  batch_size: 4
+  num_workers: 0
+  query_chunk: 2
+  database_chunk: 2
+  recall_ks: [1, 5, 10]

@@ -1,0 +1,23 @@
+# Copy this and replace model + data paths with real training data.
+# Tokyo24/7 must NOT be used as a training set.
+model:
+  type: salad_hub
+  # After a run to evaluate fine-tuned model, add:
+  # checkpoint: outputs/stage1_train/vpr_last.pth
+
+data:
+  image_root: /absolute/path/to/training_images
+  image_size: [322, 322]
+  normalize: imagenet
+training:
+  triplets_csv: /absolute/path/to/train_triplets.csv
+  epochs: 2
+  batch_size: 2
+  accumulate: 4
+  num_workers: 4
+  lr: 0.0001
+  weight_decay: 0.0001
+  margin: 0.2
+  grad_clip: 1.0
+  freeze_modules: [backbone]
+  seed: 42

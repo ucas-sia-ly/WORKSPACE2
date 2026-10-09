@@ -1,0 +1,3 @@
+day,night,negative,place_id,negative_place_id,split
+city/stationA/day1.jpg,city/stationA/night1.jpg,city/stationB/day1.jpg,stationA,stationB,train
+city/stationB/day1.jpg,city/stationB/night1.jpg,city/stationA/day1.jpg,stationB,stationA,train

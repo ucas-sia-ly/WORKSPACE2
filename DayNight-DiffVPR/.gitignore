@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+outputs/
+checkpoints/
+data/*
+!data/.gitkeep
+*.ckpt
+*.pth
+*.pt

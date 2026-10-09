@@ -1,0 +1,23 @@
+# Stage2 offline E2: run after stage2_generate; edit model factory and preprocessing.
+model:
+  type: existing
+  pythonpath: /absolute/path/to/existing_vpr_repo
+  factory: your_adapter:build_model
+  factory_kwargs: {}
+  # checkpoint: /path/to/E0_model.pth
+data:
+  image_root: /  # paths in Stage2 triplets.csv are ABSOLUTE
+  image_size: [322, 322]
+  normalize: imagenet
+training:
+  triplets_csv: outputs/stage2/triplets.csv
+  epochs: 2
+  batch_size: 2
+  accumulate: 4
+  num_workers: 4
+  lr: 0.0001
+  margin: 0.2
+  grad_clip: 1.0
+  weight_decay: 0.0001
+  freeze_modules: []  # choose model-specific modules, e.g. [backbone], not DescriptorAdapter prefix
+  seed: 42
